@@ -1,5 +1,5 @@
 resource "aws_db_instance" "rds_instance" {  
-  identifier            = random_id.db_identifier.hex
+  #identifier            = random_id.db_identifier.hex
   engine                = "postgres"
   engine_version        = var.engine_version
   instance_class        = var.instance_class
