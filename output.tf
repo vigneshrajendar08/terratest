@@ -5,10 +5,10 @@ output "rds_endpoint" {
 }
 output "id" {
   description = "The RDS instance ID"
-  value       = aws_db_instance.this.id
+  value       = aws_db_instance.id
 }
 output "arn" {
   description = "The ARN of the RDS instance"
-  value       = aws_db_instance.this.arn
+  value       = aws_db_instance.arn
 }
 
