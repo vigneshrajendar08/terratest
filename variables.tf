@@ -1,12 +1,13 @@
 variable "db_name" {
   description = "Name of the database"
   type        = string
+  default     = "chukku_db"
 }
 
 variable "replicate_source_db" {
   type        = string
   description = "The source db of read replica instance"
-  default     = null
+  default     = "chukku_replicadb"
 }
 
 variable "engine_version" {
@@ -18,6 +19,7 @@ variable "engine_version" {
 variable "instance_class" {
   type        = string
   description = "The instance type of the RDS instance"
+  default     = "db.m5d.xlarge"
 }
 
 variable "username" {
@@ -35,6 +37,7 @@ variable "port" {
 variable "allocated_storage" {
   type        = string
   description = "The allocated storage in gigabytes. For read replica, set the same value as master's"
+  default     = "400"
 }
 
 variable "max_allocated_storage" {
@@ -52,6 +55,7 @@ variable "storage_type" {
 variable "parameter_group_name" {
   type        = string
   description = "Name of the DB parameter group to associate"
+  default     = "postgres14"
 }
 
 variable "skip_final_snapshot" {
