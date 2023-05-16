@@ -3,11 +3,6 @@ variable "db_name" {
   type        = string
 }
 
-variable "username" {
-  description = "Username for the database"
-  type        = string
-}
-
 variable "replicate_source_db" {
   type        = string
   description = "The source db of read replica instance"
