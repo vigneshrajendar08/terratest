@@ -1,3 +1,10 @@
+locals {
+  
+ password                = local.is_read_replica ? "" : var.snapshot_identifier == null ? local.pitr_restore == false ? random_id.password.hex : "" : ""
+ skip_final_snapshot     = local.is_read_replica ? true : var.skip_final_snapshot
+
+}  
+
 resource "aws_db_instance" "rds_instance" {  
   #identifier            = random_id.db_identifier.hex
   engine                = "postgres"
