@@ -4,6 +4,12 @@ variable "db_name" {
   default     = "chukku_db"
 }
 
+variable "password" {
+  type        = string
+  description = "password of the db"
+  default     = "chukku@123"
+}
+
 variable "replicate_source_db" {
   type        = string
   description = "The source db of read replica instance"
