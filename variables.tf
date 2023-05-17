@@ -19,7 +19,7 @@ variable "replicate_source_db" {
 variable "engine_version" {
   type        = string
   description = "The postgres engine version"
-  default     = "14.6-R1"
+  default     = ""
 }
 
 variable "instance_class" {
