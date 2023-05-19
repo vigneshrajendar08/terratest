@@ -74,6 +74,6 @@ resource "aws_api_gateway_integration" "my_api_integration" {
 # Create the API Gateway deployment
 resource "aws_api_gateway_deployment" "my_api_deployment" {
   rest_api_id = aws_api_gateway_rest_api.my_api.id
-  stage_name  = "dev"
+  stage_name  = "test"
 }
 
