@@ -52,9 +52,9 @@ resource "aws_api_gateway_vpc_link" "Nissan_Aop_Vpc_link" {
   description = "My VPC Link"
   target_arns = [aws_api_gateway_rest_api.Nissan_api.execution_arn]
   
-  subnet_ids = ["subnet-072ee44066e17bfa3", "subnet-08760d81dadc26de4"]  # Replace with the desired subnet IDs
+  #subnet_ids = ["subnet-072ee44066e17bfa3", "subnet-08760d81dadc26de4"]  # Replace with the desired subnet IDs
   
-  security_group_ids = ["sg-0bd624d3094269055"]  # Replace with the desired security group IDs
+  #security_group_ids = ["sg-0bd624d3094269055"]  # Replace with the desired security group IDs
 }
 
 # Create the API Gateway resource
