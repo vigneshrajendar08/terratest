@@ -41,8 +41,8 @@ resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
 }
 
 # Create the API Gateway REST API
-resource "aws_api_gateway_rest_api" "my_api" {
-  name        = "my-api"
+resource "aws_api_gateway_rest_api" "chukku_api" {
+  name        = "chukku_api"
   description = "My API"
 }
 
