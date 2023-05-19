@@ -41,39 +41,39 @@ resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
 }
 
 # Create the API Gateway REST API
-resource "aws_api_gateway_rest_api" "chukku_api" {
-  name        = "chukku_api"
+resource "aws_api_gateway_rest_api" "Nissan_api" {
+  name        = "Nissan_api"
   description = "My API"
 }
 
 # Create the API Gateway resource
-resource "aws_api_gateway_resource" "chukku_api_resource" {
-  rest_api_id = aws_api_gateway_rest_api.chukku_api.id
-  parent_id   = aws_api_gateway_rest_api.chukku_api.root_resource_id
+resource "aws_api_gateway_resource" "Nissan_api_resource" {
+  rest_api_id = aws_api_gateway_rest_api.Nissan_api.id
+  parent_id   = aws_api_gateway_rest_api.Nissan_api.root_resource_id
   path_part   = "my-resource"
 }
 
 # Create the API Gateway method
-resource "aws_api_gateway_method" "chukku_api_method" {
-  rest_api_id   = aws_api_gateway_rest_api.chukku_api.id
-  resource_id   = aws_api_gateway_resource.chukku_api_resource.id
+resource "aws_api_gateway_method" "Nissan_api_method" {
+  rest_api_id   = aws_api_gateway_rest_api.Nissan_api.id
+  resource_id   = aws_api_gateway_resource.Nissan_api_resource.id
   http_method   = "GET"
   authorization = "NONE"
 }
 
 # Create the Lambda integration for API Gateway
-resource "aws_api_gateway_integration" "chukku_api_integration" {
-  rest_api_id             = aws_api_gateway_rest_api.chukku_api.id
-  resource_id             = aws_api_gateway_resource.chukku_api_resource.id
-  http_method             = aws_api_gateway_method.chukku_api_method.http_method
+resource "aws_api_gateway_integration" "Nissan_api_integration" {
+  rest_api_id             = aws_api_gateway_rest_api.Nissan_api.id
+  resource_id             = aws_api_gateway_resource.Nissan_api_resource.id
+  http_method             = aws_api_gateway_method.Nissan_api_method.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
   uri                     = aws_lambda_function.my_lambda_function.invoke_arn
 }
 
 # Create the API Gateway deployment
-resource "aws_api_gateway_deployment" "chukku_api_deployment" {
-  rest_api_id = aws_api_gateway_rest_api.chukku_api.id
+resource "aws_api_gateway_deployment" "Nissan_api_deployment" {
+  rest_api_id = aws_api_gateway_rest_api.Nissan_api.id
   stage_name  = "test"
 }
 
