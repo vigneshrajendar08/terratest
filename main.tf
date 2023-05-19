@@ -1,7 +1,7 @@
 # Create the Lambda function
-resource "aws_lambda_function" "my-lambda-function" {
-  filename         = "lambda.zip"  # Replace with the path to your Lambda deployment package
-  function_name    = "my-lambda-function"
+resource "aws_lambda_function" "my_lambda_function" {
+  filename         = "my_lambda_function.zip"  # Replace with the path to your Lambda deployment package
+  function_name    = "my_lambda_function"
   role             = aws_iam_role.lambda_role.arn
   handler          = "index.handler"
   runtime          = "nodejs14.x"  # Replace with your desired runtime
@@ -68,7 +68,7 @@ resource "aws_api_gateway_integration" "chukku_api_integration" {
   http_method             = aws_api_gateway_method.chukku_api_method.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = aws_lambda_function.my-lambda-function.invoke_arn
+  uri                     = aws_lambda_function.my_lambda_function.invoke_arn
 }
 
 # Create the API Gateway deployment
