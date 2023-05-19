@@ -76,7 +76,7 @@ resource "aws_api_gateway_integration" "chukku_api_integration" {
   http_method             = aws_api_gateway_method.chukku_api_method.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = aws_lambda_function.my_lambda.invoke_arn
+  uri                     = aws_lambda_function.my-lambda-function.invoke_arn
 }
 
 # Create the API Gateway deployment
