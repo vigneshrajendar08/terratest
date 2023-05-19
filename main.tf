@@ -1,11 +1,3 @@
-provider "archive" {}
-
-data "archive_file" "zip" {
-  type        = "zip"
-  source_file = "lambda.py"
-  output_path = "lambda.zip"
-}
-
 # Create the Lambda function
 resource "aws_lambda_function" "my-lambda-function" {
   filename         = "lambda.zip"  # Replace with the path to your Lambda deployment package
