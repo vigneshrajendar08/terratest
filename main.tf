@@ -46,6 +46,17 @@ resource "aws_api_gateway_rest_api" "Nissan_api" {
   description = "My API"
 }
 
+# Create the VPC Link
+resource "aws_api_gateway_vpc_link" "Nissan_Aop_Vpc_link" {
+  name        = "Nissan_Aop_Vpc_link"
+  description = "My VPC Link"
+  target_arns = [aws_api_gateway_rest_api.my_api.execution_arn]
+  
+  subnet_ids = ["subnet-xxxxx", "subnet-yyyyy"]  # Replace with the desired subnet IDs
+  
+  security_group_ids = ["sg-xxxxx"]  # Replace with the desired security group IDs
+}
+
 # Create the API Gateway resource
 resource "aws_api_gateway_resource" "Nissan_api_resource" {
   rest_api_id = aws_api_gateway_rest_api.Nissan_api.id
