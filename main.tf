@@ -50,7 +50,7 @@ resource "aws_api_gateway_rest_api" "Nissan_api" {
 resource "aws_api_gateway_vpc_link" "Nissan_Aop_Vpc_link" {
   name        = "Nissan_Aop_Vpc_link"
   description = "My VPC Link"
-  target_arns = [aws_api_gateway_rest_api.my_api.execution_arn]
+  target_arns = [aws_api_gateway_rest_api.Nissan_api.execution_arn]
   
   subnet_ids = ["subnet-xxxxx", "subnet-yyyyy"]  # Replace with the desired subnet IDs
   
