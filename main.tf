@@ -1,10 +1,3 @@
-# main.tf
-
-# Configure the AWS provider
-provider "aws" {
-  region = "us-east-1"  # Replace with your desired AWS region
-}
-
 # Create the Lambda function
 resource "aws_lambda_function" "my_lambda" {
   filename         = "lambda.zip"  # Replace with the path to your Lambda deployment package
@@ -81,6 +74,6 @@ resource "aws_api_gateway_integration" "my_api_integration" {
 # Create the API Gateway deployment
 resource "aws_api_gateway_deployment" "my_api_deployment" {
   rest_api_id = aws_api_gateway_rest_api.my_api.id
-  stage_name  = "prod"
+  stage_name  = "dev"
 }
 
