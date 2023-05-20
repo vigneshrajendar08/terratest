@@ -85,12 +85,6 @@ resource "aws_lb_target_group_attachment" "lambda_target_attachment" {
 }
 #Please note that you should replace the placeholder values like "subnet-xxxxx", "subnet-yyyyy", and "vpc-xxxxx" with the appropriate IDs for your AWS environment.
 
-# Attach the required policies to the Lambda role
-resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
-  role       = aws_iam_role.my_lambda_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-}
-
 # Create the API Gateway REST API
 resource "aws_api_gateway_rest_api" "Nissan_api" {
   name        = "Nissan_api"
