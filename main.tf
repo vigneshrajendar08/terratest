@@ -2,7 +2,7 @@
 resource "aws_lambda_function" "my_lambda_function" {
   filename         = "my_lambda_function.zip"  # Replace with the path to your Lambda deployment package
   function_name    = "my_lambda_function"
-  role             = aws_iam_role.lambda_role.arn
+  role             = aws_iam_role.my_lambda_role.arn
   handler          = "index.handler"
   runtime          = "nodejs14.x"  # Replace with your desired runtime
 
