@@ -70,7 +70,7 @@ resource "aws_lb_target_group" "lambda_target_group" {
     interval            = 30
     path                = "/"
     port                = 80
-    protocol            = "TCP"
+    #protocol            = "TCP"
     timeout             = 5
     healthy_threshold   = 2
     unhealthy_threshold = 2
