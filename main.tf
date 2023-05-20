@@ -15,7 +15,7 @@ resource "aws_lambda_function" "my_lambda_function" {
 }
 
 # Create the IAM role for the Lambda function
-resource "aws_iam_role" "my_lambda_role" {
+resource "aws_iam_role" "lambda_role" {
   name = "my-lambda-role"
 
   assume_role_policy = <<EOF
@@ -36,7 +36,58 @@ EOF
 
 # Attach the required policies to the Lambda role
 resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
-  role       = aws_iam_role.lambda_role.name
+  role       = aws_iam_role.lambda_role.my-lambda-role
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+# Create the Network Load Balancer (NLB)
+resource "aws_lb" "lambda_nlb" {
+  name               = "my-lambda-nlb"
+  internal           = false
+  load_balancer_type = "network"
+  #ubnets            = ["subnet-xxxxx", "subnet-yyyyy"]  # Replace with the desired subnet IDs
+}
+
+# Create the NLB listener
+resource "aws_lb_listener" "lambda_nlb_listener" {
+  load_balancer_arn = aws_lb.lambda_nlb.arn
+  port              = 80  # Replace with the desired port number
+  protocol          = "TCP"
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.lambda_target_group.arn
+  }
+}
+
+# Create the target group for the NLB
+resource "aws_lb_target_group" "lambda_target_group" {
+  name     = "my-lambda-target-group"
+  port     = 80  # Replace with the desired port number
+  protocol = "TCP"
+  #vpc_id   = "vpc-xxxxx"  # Replace with the desired VPC ID
+
+  health_check {
+    interval            = 30
+    path                = "/"
+    port                = 80
+    protocol            = "TCP"
+    timeout             = 5
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+  }
+}
+
+# Create the NLB target group attachment for the Lambda function
+resource "aws_lb_target_group_attachment" "lambda_target_attachment" {
+  target_group_arn = aws_lb_target_group.lambda_target_group.arn
+  target_id        = aws_lambda_function.my_lambda.arn
+  port             = 80  # Replace with the desired port number
+}
+#Please note that you should replace the placeholder values like "subnet-xxxxx", "subnet-yyyyy", and "vpc-xxxxx" with the appropriate IDs for your AWS environment.
+
+# Attach the required policies to the Lambda role
+resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
+  role       = aws_iam_role.my_lambda_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
@@ -55,50 +106,6 @@ resource "aws_api_gateway_vpc_link" "Nissan_Aop_Vpc_link" {
   #subnet_ids = ["subnet-072ee44066e17bfa3", "subnet-08760d81dadc26de4"]  # Replace with the desired subnet IDs
   
   #security_group_ids = ["sg-0bd624d3094269055"]  # Replace with the desired security group IDs
-}
-
-# Create the Network Load Balancer (NLB)
-resource "aws_lb" "lambda_nlb" {
-  name               = "Nissan-lambda-nlb"
-  internal           = false
-  load_balancer_type = "network"
-  #subnets            = ["subnet-xxxxx", "subnet-yyyyy"]  # Replace with the desired subnet IDs
-}
-
-# Create the NLB listener
-resource "aws_lb_listener" "lambda_nlb_listener" {
-  load_balancer_arn = aws_lb.lambda_nlb.arn
-  port              = 80  # Replace with the desired port number
-  protocol          = "TCP"
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.lambda_target_group.arn
-  }
-}
-
-# Create the target group for the NLB
-resource "aws_lb_target_group" "lambda_target_group" {
-  name     = "Nissan-lambda-target-group"
-  port     = 80  # Replace with the desired port number
-  protocol = "TCP"
-  vpc_id   = "vpc-xxxxx"  # Replace with the desired VPC ID
-
-  health_check {
-    interval            = 30
-    path                = "/"
-    port                = 80
-    protocol            = "TCP"
-    timeout             = 5
-    healthy_threshold   = 2
-    unhealthy_threshold = 2
-  }
-}
-
-# Create the NLB target group attachment for the Lambda function
-resource "aws_lb_target_group_attachment" "lambda_target_attachment" {
-  target_group_arn = aws_lb_target_group.lambda_target_group.arn
-  target_id        = aws_lambda_function.my_lambda.arn
-  port             = 80  # Replace with the desired port number
 }
 
 # Create the API Gateway resource
