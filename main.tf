@@ -15,8 +15,8 @@ resource "aws_lambda_function" "my_lambda_function" {
 }
 
 # Create the IAM role for the Lambda function
-resource "aws_iam_role" "lambda_role" {
-  name = "my-lambda-role"
+resource "aws_iam_role" "my_lambda_role" {
+  name = "my_lambda_role"
 
   assume_role_policy = <<EOF
 {
@@ -36,7 +36,7 @@ EOF
 
 # Attach the required policies to the Lambda role
 resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
-  role       = aws_iam_role.lambda_role.my-lambda-role
+  role       = aws_iam_role. my_lambda_role.my_lambda_role
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
@@ -45,7 +45,7 @@ resource "aws_lb" "lambda_nlb" {
   name               = "my-lambda-nlb"
   internal           = false
   load_balancer_type = "network"
-  #ubnets            = ["subnet-xxxxx", "subnet-yyyyy"]  # Replace with the desired subnet IDs
+  #subnets            = ["subnet-xxxxx", "subnet-yyyyy"]  # Replace with the desired subnet IDs
 }
 
 # Create the NLB listener
@@ -80,7 +80,7 @@ resource "aws_lb_target_group" "lambda_target_group" {
 # Create the NLB target group attachment for the Lambda function
 resource "aws_lb_target_group_attachment" "lambda_target_attachment" {
   target_group_arn = aws_lb_target_group.lambda_target_group.arn
-  target_id        = aws_lambda_function.my_lambda.arn
+  target_id        = aws_lambda_function.my_lambda_function.arn
   port             = 80  # Replace with the desired port number
 }
 #Please note that you should replace the placeholder values like "subnet-xxxxx", "subnet-yyyyy", and "vpc-xxxxx" with the appropriate IDs for your AWS environment.
@@ -130,11 +130,9 @@ resource "aws_api_gateway_integration" "Nissan_api_integration" {
 # Create the API Gateway deployment
 resource "aws_api_gateway_deployment" "Nissan_api_deployment" {
   depends_on = [
-        aws_api_gateway_method.methodproxy,
-        aws_api_gateway_integration.apilambda
+        aws_api_gateway_method.Nissan_api_method,
+        aws_api_gateway_integration.Nissan_api_integration
       ]
   rest_api_id = aws_api_gateway_rest_api.Nissan_api.id
   stage_name  = "test"
 }
-
-
