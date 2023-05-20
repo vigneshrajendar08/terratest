@@ -36,7 +36,7 @@ EOF
 
 # Attach the required policies to the Lambda role
 resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
-  role       = aws_iam_role.my_lambda_role.role
+  role       = aws_iam_role.my_lambda_role.arn
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
