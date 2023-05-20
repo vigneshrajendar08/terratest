@@ -1,3 +1,10 @@
+# Create the vpc
+resource "aws_default_vpc" "default" {
+  tags = {
+    Name = "Default VPC"
+  }
+}
+
 # Create the Lambda function
 resource "aws_lambda_function" "my_lambda_function" {
   filename         = "my_lambda_function.zip"  # Replace with the path to your Lambda deployment package
@@ -64,7 +71,7 @@ resource "aws_lb_target_group" "lambda_target_group" {
   name     = "my-lambda-target-group"
   port     = 80  # Replace with the desired port number
   protocol = "TCP"
-  #vpc_id   = "vpc-xxxxx"  # Replace with the desired VPC ID
+  #vpc_Name   = "Default VPC"  # Replace with the desired VPC name
 
   health_check {
     interval            = 30
