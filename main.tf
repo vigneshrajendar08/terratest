@@ -1,4 +1,4 @@
-resource "aws_lambda_function" "my_lambda" {
+resource "aws_lambda_function" "Nissan-Aop-Lambda-Function" {
   function_name = "Nissan-Aop-Lambda-Function"
   runtime       = "python3.9"
   handler       = "lambda_handler"
