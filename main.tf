@@ -1,4 +1,4 @@
-resource "aws_lambda_function" "my_lambda" {
+resource "aws_lambda_function" "my_lambda_function" {
   function_name = "my_lambda_function"
   runtime       = "python3.8"
   handler       = "lambda_handler"
