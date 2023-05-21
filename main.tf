@@ -1,6 +1,6 @@
 resource "aws_lambda_function" "my_lambda" {
   function_name = "Nissan-Aop-Lambda-Function"
-  runtime       = "Node.js 18.x "
+  runtime       = "python3.9"
   handler       = "lambda_handler"
   role          = aws_iam_role.lambda_role.arn
   filename      = "lambda_function.zip"
