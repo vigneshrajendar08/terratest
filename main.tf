@@ -3,7 +3,7 @@ resource "aws_lambda_function" "Nissan_Aop_Lambda_Function" {
   runtime       = "python3.9"
   handler       = "lambda_handler"
   role          = aws_iam_role.lambda_role.arn
-  filename      = "lambda_function.zip"
+  filename      = "Nissan_Aop_Lambda_Function.zip"
   #source_code_hash = filebase64sha256("lambda_function.zip")
 }
 
