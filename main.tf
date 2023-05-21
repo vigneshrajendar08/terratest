@@ -1,7 +1,3 @@
-provider "aws" {
-  region = "us-east-1"  # Replace with your desired region
-}
-
 resource "aws_lambda_function" "my_lambda" {
   function_name = "Nissan-Aop-Lambda-Function"
   runtime       = "Node.js 18.x "
