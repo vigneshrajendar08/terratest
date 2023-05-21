@@ -1,10 +1,10 @@
 resource "aws_lambda_function" "my_lambda" {
-  function_name = "my-lambda-function"
+  function_name = "NIssan-lambda-function"
   runtime       = "python3.8"
   handler       = "lambda_handler"
   role          = aws_iam_role.lambda_role.arn
-  filename      = "lambda_function.zip"
-  source_code_hash = filebase64sha256("lambda_function.zip")
+  filename      = "my_lambda.zip"
+  source_code_hash = filebase64sha256("my_lambda.zip")
 }
 
 resource "aws_iam_role" "lambda_role" {
