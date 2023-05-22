@@ -27,7 +27,6 @@ resource "aws_instance" "example" {
 resource "aws_vpc_endpoint" "my_endpoint" {
   vpc_id         = "${data.aws_vpc.default}"         # Replace with the ID of your VPC
   service_name   = "com.amazonaws.us-east-1.account"  # Replace with the desired service name
-  vpc_id = data.aws_vpc.default.id
   vpc_endpoint_type = "Gateway"           # Replace with the desired endpoint type
   subnet_id = data.aws_vpc.default.default_subnet_id
 
