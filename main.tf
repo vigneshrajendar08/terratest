@@ -1,9 +1,16 @@
+data "archive_file" "zip" {
+  type        = "zip"
+  source_file = "hello_lambda.py"
+  output_path = "hello_lambda.zip"
+}
+
 resource "aws_lambda_function" "my_lambda" {
   function_name = "Nissan-Aop-Lambda-Function"
   runtime       = "python3.8"
   handler       = "lambda_handler"
   role          = aws_iam_role.lambda_role.arn
-  filename      = "Nissan_Aop_Lambda_Function.py"
+  filename         = "${data.archive_file.zip.output_path}"
+  source_code_hash = "${data.archive_file.zip.output_base64sha256}"
 }
 
 resource "aws_iam_role" "lambda_role" {
@@ -22,4 +29,11 @@ resource "aws_iam_role" "lambda_role" {
   ]
 }
 EOF
+}
+
+environment {
+    variables = {
+      greeting = "Hello"
+    }
+  }
 }
