@@ -13,8 +13,15 @@ resource "aws_default_subnet" "default_az2" {
 }
 
 data "aws_security_group" "default" {
-  default = true
+  filter {
+    name   = "group-name"
+    values = ["default"]
+  }
 }
+
+#data "aws_security_group" "default" {
+  #default = true
+#}
 
 #resource "aws_instance" "example" {
   #ami           = "ami-12345678"  # Replace with your desired AMI
