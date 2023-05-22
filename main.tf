@@ -7,7 +7,7 @@ data "archive_file" "zip" {
 resource "aws_lambda_function" "my_lambda" {
   function_name = "Nissan-Aop-Lambda-Function"
   runtime       = "python3.8"
-  handler       = "hello lambda.lambda_handler"
+  handler       = "hello_lambda.lambda_handler"
   role          = aws_iam_role.lambda_role.arn
   filename         = "${data.archive_file.zip.output_path}"
   source_code_hash = "${data.archive_file.zip.output_base64sha256}"
