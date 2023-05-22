@@ -5,7 +5,8 @@ resource "aws_api_gateway_rest_api" "Nissan_api" {
 }
 
 resource "aws_default_subnet" "default_az1" {
-  availability_zone = "us-east-1a","us-east-1b"
+  availability_zone = "us-east-1a"
+  availability_zone = "us-east-1b"
 
   tags = {
     Name = "Default subnet for us-east-1a us-east-1b"
