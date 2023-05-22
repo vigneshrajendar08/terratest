@@ -19,12 +19,10 @@ data "aws_security_group" "default" {
   }
 }
 
-data "vpc" "default" {
-  filter {
-    name   = "vpc-name"
-    values = ["default"]
-  }
+data "aws_vpc" "selected" {
+  id = var.vpc_id
 }
+
 
 #data "aws_security_group" "default" {
   #default = true
