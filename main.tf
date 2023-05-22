@@ -20,7 +20,7 @@ data "aws_security_group" "default" {
   #ami           = "ami-12345678"  # Replace with your desired AMI
   #instance_type = "t2.micro"
   #vpc_security_group_ids = [aws_security_group.example.id]
-  subnet_id = data.aws_vpc.default.default_subnet_id
+  #subnet_id = data.aws_vpc.default.default_subnet_id
 }
 
 resource "aws_vpc_endpoint" "my_endpoint" {
