@@ -8,7 +8,7 @@ resource "aws_default_subnet" "default_az1" {
   availability_zone = "us-east-1a"
 }
 
-resource "aws_default_subnet" "default_az1" {
+resource "aws_default_subnet" "default_az2" {
    availability_zone = "us-east-1b"
 }
   tags = {
