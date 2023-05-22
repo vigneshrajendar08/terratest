@@ -3,7 +3,7 @@ resource "aws_lambda_function" "my_lambda" {
   runtime       = "python3.8"
   handler       = "lambda_handler"
   role          = aws_iam_role.lambda_role.arn
-  filename      = "Nissan_Aop_Lambda_Function.zip"
+  filename      = "Nissan_Aop_Lambda_Function.py"
 }
 
 resource "aws_iam_role" "lambda_role" {
