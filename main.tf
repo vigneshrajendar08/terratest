@@ -16,11 +16,11 @@ data "aws_security_group" "default" {
   default = true
 }
 
-resource "aws_instance" "example" {
-  ami           = "ami-12345678"  # Replace with your desired AMI
-  instance_type = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.example.id]
-
+#resource "aws_instance" "example" {
+  #ami           = "ami-12345678"  # Replace with your desired AMI
+  #instance_type = "t2.micro"
+  #vpc_security_group_ids = [aws_security_group.example.id]
+{
   subnet_id = data.aws_vpc.default.default_subnet_id
 }
 
