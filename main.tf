@@ -4,12 +4,12 @@ resource "aws_api_gateway_rest_api" "Nissan_api" {
   description = "My API"
 }
 
-data "aws_vpc" "default" {
-  default = true
-}
+resource "aws_default_subnet" "default_az1" {
+  availability_zone = "us-east-1a" "us-east-1b"
 
-data "aws_subnet" "default" {
-  default = true
+  tags = {
+    Name = "Default subnet for us-east-1a" "us-east-1b"
+  }
 }
 
 data "aws_security_group" "default" {
