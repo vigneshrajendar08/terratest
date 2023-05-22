@@ -7,9 +7,13 @@ terraform {
   }
 }
 
-# Configure the AWS Provider
 provider "aws" {
-  region = "us-east-1a"
-  aws_region = "us-east-1b"
+  region = "us-east-1"
+  # Add your AWS credentials or use environment variables or other authentication methods
+}
 
+provider "aws" {
+  alias  = "us-east-2"
+  region = "us-east-2"
+  # Add your AWS credentials or use environment variables or other authentication methods
 }
