@@ -14,7 +14,7 @@ resource "aws_lambda_function" "my_lambda" {
 }
 
 resource "aws_iam_role" "lambda_role" {
-  name = "lambda-role"
+  name = "nissan-lambda-role"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
