@@ -31,9 +31,8 @@ resource "aws_iam_role" "lambda_role" {
 EOF
 }
 
-environment {
-    variables = {
-      greeting = "Hello"
-    }
-  }
-}
+#environment {
+    #variables = {
+      #greeting = "Hello"
+    #}
+  #}
