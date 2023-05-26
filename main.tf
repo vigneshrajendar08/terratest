@@ -7,7 +7,7 @@ module "lambda" {
   source  = "cloudposse/lambda-function/aws"
   #version = "xxxx"
   filename      = "lambda_function.zip"
-  function_name = "Nissan-Aop-function"
+  function_name = "lambda_function"
   handler       = "handler.handler"
   runtime       = "nodejs14.x"
 }
