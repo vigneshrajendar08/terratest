@@ -9,5 +9,5 @@ module "lambda" {
   filename      = "lambda_function.zip"
   function_name = "Nissan-Aop-function"
   handler       = "handler.handler"
-  runtime       = "python3.8"
+  runtime       = "nodejs14.x"
 }
