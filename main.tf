@@ -31,7 +31,7 @@ module lambda {
   filename       = data.archive_file.lambda.output_path
   description    = "description should be here"
   handler        = "index.handler"
-  runtime        = "nodejs12.x"
+  runtime        = "nodejs18.x"
   memory_size    = "128"
   concurrency    = "5"
   lambda_timeout = "20"
