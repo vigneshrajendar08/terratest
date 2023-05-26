@@ -30,9 +30,9 @@ module lambda {
   description    = "lambda function"
   handler        = "hello_lambda.lambda_handler"
   runtime        = "python3.8"
-  #memory_size    = "128"
-  #concurrency    = "5"
-  #lambda_timeout = "20"
-  #log_retention  = "1"
+  memory_size    = "128"
+  concurrency    = "5"
+  lambda_timeout = "20"
+  log_retention  = "1"
   role_arn       = aws_iam_role.lambda_role.arn
 }
