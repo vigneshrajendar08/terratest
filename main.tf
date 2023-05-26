@@ -1,38 +1,76 @@
-data "archive_file" "zip" {
+data archive_file lambda {
   type        = "zip"
-  source_file = "hello_lambda.py"
-  output_path = "hello_lambda.zip"
+  source_file = "index.js"
+  output_path = "lambda_function.zip"
 }
 
-resource "aws_iam_role" "lambda_role" {
-  name = "nissan-lambda-role"
+
+resource aws_iam_role iam {
+  name = "iam_for_lambda_tf"
+
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Effect": "Allow",
+      "Action": "sts:AssumeRole",
       "Principal": {
         "Service": "lambda.amazonaws.com"
       },
-      "Action": "sts:AssumeRole"
+      "Effect": "Allow",
+      "Sid": ""
     }
   ]
 }
 EOF
 }
 
+resource aws_iam_policy this {
+  name        = format("%s-trigger-transcoder", local.full_name)
+  description = "Allow to access base resources and trigger transcoder"
+  policy      = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "SomeVeryDefaultAndOpenActions",
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogGroup",
+                "ec2:DescribeNetworkInterfaces",
+                "ec2:CreateNetworkInterface",
+                "ec2:DeleteNetworkInterface",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": [
+                "*"
+            ]
+        }
+    ]
+}
+
+EOF
+}
 module lambda {
   source = "github.com/terraform-module/terraform-aws-lambda?ref=v2.12.8"
 
-  function_name  = "Nissan-Aop-Lambda-Function"
-  filename       = data.archive_file.zip.output_path
-  description    = "lambda function"
-  handler        = "hello_lambda.lambda_handler"
-  runtime        = "python3.8"
+  function_name  = "nissan-aop-lambda"
+  filename       = data.archive_file.lambda.output_path
+  description    = "description should be here"
+  handler        = "index.handler"
+  runtime        = "nodejs12.x"
   memory_size    = "128"
   concurrency    = "5"
   lambda_timeout = "20"
   log_retention  = "1"
-  role_arn       = aws_iam_role.lambda_role.arn
+  role_arn       = aws_iam_role.iam.arn
+
+  environment = {
+    Environment = "test"
+  }
+
+  tags = {
+    Environment = "test"
+  }
 }
