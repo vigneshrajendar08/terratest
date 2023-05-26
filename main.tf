@@ -15,7 +15,7 @@ module "lambda" {
 module "api-gateway" {
     source        = "clouddrove/api-gateway/aws"
     version       = "1.0.1"
-    name          = "Nissan-Aop-api-gateway"
+    name          = "chukku-Aop-api-gateway"
     environment   = "test"
     label_order   = ["name", "environment"]
     enabled       = true
