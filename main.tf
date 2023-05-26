@@ -20,6 +20,6 @@ module "api-gateway" {
     label_order   = ["name", "environment"]
     enabled       = true
     vpc_endpoint_ids = ["private"]
-    vpc_link_names`= ["Nissan-Aop-Vpc"]
+    vpc_link_names = ["Nissan-Aop-Vpc"]
 
 }
