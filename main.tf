@@ -26,7 +26,7 @@ module lambda {
   source = "github.com/terraform-module/terraform-aws-lambda?ref=v2.12.8"
 
   function_name  = "Nissan-Aop-Lambda-Function"
-  filename       = data.archive_file.lambda.output_path
+  filename       = data.archive_file.zip.output_path
   description    = "lambda function"
   handler        = "hello_lambda.lambda_handler"
   runtime        = "python3.8"
