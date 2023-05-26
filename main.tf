@@ -4,7 +4,6 @@ data archive_file lambda {
   output_path = "lambda_function.zip"
 }
 
-
 resource aws_iam_role iam {
   name = "iam_for_lambda_tf"
 
@@ -25,33 +24,6 @@ resource aws_iam_role iam {
 EOF
 }
 
-resource aws_iam_policy this {
-  name        = format("%s-trigger-transcoder", local.full_name)
-  description = "Allow to access base resources and trigger transcoder"
-  policy      = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "SomeVeryDefaultAndOpenActions",
-            "Effect": "Allow",
-            "Action": [
-                "logs:CreateLogGroup",
-                "ec2:DescribeNetworkInterfaces",
-                "ec2:CreateNetworkInterface",
-                "ec2:DeleteNetworkInterface",
-                "logs:CreateLogStream",
-                "logs:PutLogEvents"
-            ],
-            "Resource": [
-                "*"
-            ]
-        }
-    ]
-}
-
-EOF
-}
 module lambda {
   source = "github.com/terraform-module/terraform-aws-lambda?ref=v2.12.8"
 
