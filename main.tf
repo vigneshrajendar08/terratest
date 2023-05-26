@@ -33,7 +33,7 @@ module lambda {
   handler        = "index.handler"
   runtime        = "nodejs18.x"
   memory_size    = "128"
-  concurrency    = "5"
+  concurrency    = "10"
   lambda_timeout = "20"
   log_retention  = "1"
   role_arn       = aws_iam_role.iam.arn
