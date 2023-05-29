@@ -4,8 +4,10 @@ module "nlb" {
 
   name = "example"
 
-  vpc = aws_vpc.this
-
+  data "aws_vpc" "default" {
+  default = true
+}
+  
   cidr_blocks = {
     us-east-1a = cidrsubnet(aws_vpc.this, 8, 0)
     us-east-1b = cidrsubnet(aws_vpc.this, 8, 1)
