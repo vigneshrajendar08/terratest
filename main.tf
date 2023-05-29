@@ -7,8 +7,8 @@ module "nlb" {
   vpc = aws_vpc.this
 
   cidr_blocks = {
-    eu-west-1a = cidrsubnet(aws_vpc.this, 8, 0)
-    eu-west-1b = cidrsubnet(aws_vpc.this, 8, 1)
+    us-east-1a = cidrsubnet(aws_vpc.this, 8, 0)
+    us-east-1b = cidrsubnet(aws_vpc.this, 8, 1)
   }
 
   tags = {
