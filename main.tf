@@ -21,8 +21,8 @@ module "api-gateway" {
     enabled       = true
     #vpc_endpoint_ids = ["private"]
     #vpc_link_names = ["Nissan-Aop-Vpc"]
-    vpc_link_tags =  {
-      value = "Nissan-Aop-Vpc"
-    }   
+    #vpc_link_tags =  {
+      #value = "Nissan-Aop-Vpc"
+    #}   
 
 }
