@@ -1,20 +1,28 @@
-module "nlb" {
-  source  = "babbel/nlb-for-apigateway-vpc-link/aws"
-  version = "~> 1.1"
-
-  name = "example"
-
-  data "aws_vpc" "default" {
-  default = true
+data archive_file lambda {
+  type        = "zip"
+  source_file = "index.js"
+  output_path = "lambda_function.zip"
+}
+module "lambda" {
+  source  = "cloudposse/lambda-function/aws"
+  #version = "xxxx"
+  filename      = "lambda_function.zip"
+  function_name = "lambda_function"
+  handler       = "handler.handler"
+  runtime       = "nodejs14.x"
 }
   
-  cidr_blocks = {
-    us-east-1a = cidrsubnet(aws_vpc.this, 8, 0)
-    us-east-1b = cidrsubnet(aws_vpc.this, 8, 1)
-  }
-
-  tags = {
-    app = "example"
-    env = "test"
-  }
-}
+module "api-gateway" {
+    source        = "clouddrove/api-gateway/aws"
+    version       = "1.0.1"
+    name          = "chukku-Aop-api-gateway"
+    environment   = "test"
+    label_order   = ["name", "environment"]
+    enabled       = true
+    #vpc_endpoint_ids = ["private"]
+    vpc_link_names = ["Nissan-Aop-Vpc"]
+    #vpc_link_tags =  {
+      #value = "Nissan-Aop-Vpc"
+    #}
+  
+} 
