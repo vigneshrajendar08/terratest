@@ -26,7 +26,7 @@ module "nlb" {
     {
       port               = 443
       protocol           = "TLS"
-      certificate_arn    = "arn:aws:iam::123456789012:server-certificate/test_cert-123456789012"
+      #certificate_arn    = "arn:aws:iam::123456789012:server-certificate/test_cert-123456789012"
       target_group_index = 0
     }
   ]
