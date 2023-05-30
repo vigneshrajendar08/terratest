@@ -2,7 +2,7 @@ module "nlb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "~> 8.0"
 
-  name = "chukku-nlb"
+  name = "my-nlb"
 
   load_balancer_type = "network"
 
@@ -10,7 +10,7 @@ module "nlb" {
   subnets = ["subnet-092f810cc59683e1e", "subnet-0a5747a7c6ca78afa"]
 
   access_logs = {
-    bucket = "chukku-nlb-logs"
+    bucket = "my-nlb-logs"
   }
 
   target_groups = [
@@ -43,5 +43,3 @@ module "nlb" {
     Environment = "Test"
   }
 }
-
-
