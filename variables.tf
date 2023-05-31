@@ -28,10 +28,10 @@ variable "zone_tags" {
   default     = null
 }
 
-variable "records" {
-  type        = list(string)
-  description = "DNS records to create"
-}
+#variable "records" {
+  #type        = list(string)
+  #description = "DNS records to create"
+#}
 
 variable "type" {
   type        = string
