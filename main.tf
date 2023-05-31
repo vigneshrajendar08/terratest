@@ -7,7 +7,7 @@ module "label" {
   name      = "example"
 }
 
-module "route53_chukku" {
+module "route53_hostname" {
   source  = "cloudposse/route53-cluster-hostname/aws"
   # Cloud Posse recommends pinning every module to a specific version
   #version = "0.13.0"
@@ -16,7 +16,7 @@ module "route53_chukku" {
   type    = "CNAME"
 
   records = [
-    "test-chukku-hostname",
+    "test-hostname",
   ]
 
   context = module.label.context
