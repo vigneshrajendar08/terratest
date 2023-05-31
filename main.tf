@@ -1,13 +1,23 @@
-data archive_file lambda {
-  type        = "zip"
-  source_file = "index.js"
-  output_path = "lambda_function.zip"
+module "label" {
+  source  = "cloudposse/label/null"
+  # Cloud Posse recommends pinning every module to a specific version, though usually you want to use the current one
+  version = "0.13.0"
+
+  namespace = "eg"
+  name      = "example"
 }
-module "lambda" {
-  source  = "cloudposse/lambda-function/aws"
-  version = "0.5.1"
-  filename      = "lambda_function.zip"
-  function_name = "lambda_function"
-  handler       = "handler.handler"
-  runtime       = "nodejs14.x"
+
+module "route53_chukku" {
+  source  = "cloudposse/route53-cluster-hostname/aws"
+  # Cloud Posse recommends pinning every module to a specific version
+  version = "0.13.0"
+
+  zone_id = "Z3SO0TKDDQ0RGG"
+  type    = "CNAME"
+
+  records = [
+    "test-chukku-hostname",
+  ]
+
+  context = module.label.context
 }
