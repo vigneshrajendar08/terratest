@@ -1,7 +1,7 @@
 module "sns_topic" {
   source  = "terraform-aws-modules/sns/aws"
 
-  name  = "simple"
+  name  = "Nissan-Aop"
 
   tags = {
     Environment = "dev"
