@@ -1,12 +1,3 @@
-module "label" {
-  source  = "cloudposse/label/null"
-  # Cloud Posse recommends pinning every module to a specific version, though usually you want to use the current one
-  #version = "0.13.0"
-
-  namespace = "eg"
-  name      = "example"
-}
-
 module "route53_hostname" {
   source  = "cloudposse/route53-cluster-hostname/aws"
   # Cloud Posse recommends pinning every module to a specific version
