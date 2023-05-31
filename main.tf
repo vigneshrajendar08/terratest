@@ -1,3 +1,17 @@
+locals {
+  enabled = module.this.enabled
+}
+
+data "aws_route53_zone" "default" {
+  count = module.this.enabled ? 1 : 0
+
+  name         = var.zone_name
+  private_zone = var.private_zone
+  zone_id      = var.zone_id
+  vpc_id       = var.zone_vpc_id
+  tags         = var.zone_tags
+}
+
 module "label" {
   source  = "cloudposse/label/null"
   # Cloud Posse recommends pinning every module to a specific version, though usually you want to use the current one
