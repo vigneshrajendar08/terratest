@@ -11,7 +11,7 @@ module "sns_topic" {
 subscriptions = {
     sns = {
       protocol = "lambda"
-      endpoint = "arn:aws:lambda:us-east-1:579484639223:function:testforssns"
+      #endpoint = "arn:aws:lambda:us-east-1:579484639223:function:testforssns"
     }
   }
   
