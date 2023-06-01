@@ -1,18 +1,49 @@
-module "sns_topic" {
-  source  = "terraform-aws-modules/sns/aws"
+module "zones" {
+  source  = "terraform-aws-modules/route53/aws//modules/zones"
+  version = "~> 2.0"
 
-  name  = "Nissan-Aop"
+  zones = {
+    "terraform-aws-modules-example.com" = {
+      comment = "terraform-aws-modules-examples.com (production)"
+      tags = {
+        env = "production"
+      }
+    }
 
-  tags = {
-    Environment = "dev"
-    Terraform   = "true"
-  }
-
-subscriptions = {
-    sns = {
-      protocol = "lambda"
-      #endpoint = "arn:aws:lambda:us-east-1:579484639223:function:testforssns"
+    "myapp.com" = {
+      comment = "myapp.com"
     }
   }
-  
-}  
+
+  tags = {
+    ManagedBy = "Terraform"
+  }
+}
+
+module "records" {
+  source  = "terraform-aws-modules/route53/aws//modules/records"
+  version = "~> 2.0"
+
+  zone_name = keys(module.zones.route53_zone_zone_id)[0]
+
+  records = [
+    {
+      name    = "apigateway1"
+      type    = "A"
+      alias   = {
+        name    = "d-10qxlbvagl.execute-api.us-east-1.amazonaws.com"
+        zone_id = "ZLY8HYME6SFAD"
+      }
+    },
+    {
+      name    = ""
+      type    = "A"
+      ttl     = 3600
+      records = [
+        "10.10.10.10",
+      ]
+    },
+  ]
+
+  depends_on = [module.zones]
+} 
