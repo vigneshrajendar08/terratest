@@ -6,7 +6,7 @@ data archive_file lambda {
 module "lambda_function" {
   source = "terraform-aws-modules/lambda/aws"
 
-  filename      = "Nissan-Aop-lambda_function.zip"
+  #filename      = "Nissan-Aop-lambda_function.zip"
   function_name = "Nissan-Aop-lambda"
   description   = "Nissan lambda function"
   handler       = "index.lambda_handler"
