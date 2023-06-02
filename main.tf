@@ -1,49 +1,14 @@
-module "zones" {
-  source  = "terraform-aws-modules/route53/aws//modules/zones"
-  version = "~> 2.0"
+module "lambda_function" {
+  source = "terraform-aws-modules/lambda/aws"
 
-  zones = {
-    "terraform-aws-modules-example.com" = {
-      comment = "terraform-aws-modules-examples.com (production)"
-      tags = {
-        env = "production"
-      }
-    }
+  function_name = "Nissan-Aop-lambda"
+  description   = "Nissan lambda function"
+  handler       = "index.lambda_handler"
+  runtime       = "nodejs14.x"
 
-    "myapp.com" = {
-      comment = "myapp.com"
-    }
-  }
+  source_path = "../src/lambda-function1"
 
   tags = {
-    ManagedBy = "Terraform"
+    Name = "Nissan-Aop-lambda"
   }
 }
-
-module "records" {
-  source  = "terraform-aws-modules/route53/aws//modules/records"
-  version = "~> 2.0"
-
-  zone_name = keys(module.zones.route53_zone_zone_id)[0]
-
-  records = [
-    {
-      name    = "apigateway1"
-      type    = "A"
-      alias   = {
-        name    = "d-10qxlbvagl.execute-api.us-east-1.amazonaws.com"
-        zone_id = "ZLY8HYME6SFAD"
-      }
-    },
-    {
-      name    = ""
-      type    = "A"
-      ttl     = 3600
-      records = [
-        "10.10.10.10",
-      ]
-    },
-  ]
-
-  depends_on = [module.zones]
-} 
