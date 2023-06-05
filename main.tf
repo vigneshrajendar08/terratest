@@ -1,5 +1,5 @@
 module "lambda_api_gateway" {
-  source               = "terraform-aws-lambda-api-gateway"
+  source               = "techjacker/terraform-aws-lambda-api-gateway"
 # lambda
   lambda_zip_path      = "lambda/lambdafunction.zip"
   lambda_handler       = "handler.handler"
