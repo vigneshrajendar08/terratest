@@ -1,19 +1,31 @@
-module "lambda-api-gateway" {
-  source  = "techjacker/lambda-api-gateway/aws"
-  version = "1.0.2"
-  
-  # lambda
-  lambda_zip_path      = "lambda/lambdafunction.zip"
-  lambda_handler       = "handler.handler"
-  lambda_runtime       = "nodejs14.x"
-  lambda_function_name = "NissanAop"
+module "lambda" {
+  source = "hashicorp/lambda/aws"
 
-  # API gateway
-  region               = "us-east-1"
-  account_id           = "579484639223"
-  
-  public_subnets_cidr  = ["10.0.1.0/24", "10.0.2.0/24"]
+  name = "hello_world"
+  runtime = "nodejs14.x"
+  handler = "lambda_function.handler"
+  code_size = 128
+  memory_size = 128
+  timeout = 300
 
+  environment {
+    "FOO" = "bar"
+  }
+}
 
+module "api_gateway" {
+  source = "hashicorp/api_gateway/aws"
 
+  name = "hello_world"
+  region = "us-east-1"
+
+  rest_api {
+    description = "A simple REST API"
+  }
+
+  method {
+    resource_id = "${module.lambda.function_arn}"
+    method_type = "GET"
+    uri = "/"
+  }
 }
