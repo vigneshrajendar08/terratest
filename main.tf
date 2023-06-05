@@ -1,6 +1,8 @@
-module "lambda_api_gateway" {
-  source               = "techjacker/terraform-aws-lambda-api-gateway"
-# lambda
+module "lambda-api-gateway" {
+  source  = "techjacker/lambda-api-gateway/aws"
+  version = "1.0.2"
+  
+  # lambda
   lambda_zip_path      = "lambda/lambdafunction.zip"
   lambda_handler       = "handler.handler"
   lambda_runtime       = "nodejs14.x"
