@@ -11,4 +11,9 @@ module "lambda-api-gateway" {
   # API gateway
   region               = "us-east-1"
   account_id           = "579484639223"
+  
+  public_subnets_cidr  = ["10.0.1.0/24", "10.0.2.0/24"]
+
+
+
 }
