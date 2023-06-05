@@ -32,7 +32,7 @@ module "records" {
       type    = "A"
       alias   = {
         name    = "d-10qxlbvagl.execute-api.us-east-1.amazonaws.com"
-        zone_id = module.zones.route53_zone_zone_id
+        zone_id = "module.zones.route53_zone_zone_id"
       }
     },
     {
