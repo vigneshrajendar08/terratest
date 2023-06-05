@@ -1,14 +1,12 @@
-module "api_gateway_lambda_integration" {
-  source  = "infrablocks/api-gateway-lambda-integration/aws"
-  version = "2.0.0"
+module "lambda_api_gateway" {
+  source               = "git@github.com:techjacker/terraform-aws-lambda-api-gateway"
+# lambda
+  lambda_zip_path      = "lambda/lambdafunction.zip"
+  lambda_handler       = "handler.handler"
+  lambda_runtime       = "nodejs14.x"
+  lambda_function_name = "NissanAop"
 
-  region = "us-east-1"
-
-  component             = "lambda-resource"
-  deployment_identifier = "production"
-
-  api_gateway_rest_api_id               = "x3H41ka22w"
-  api_gateway_rest_api_root_resource_id = "321pyrfif2"
-
-  lambda_function_name = "lambda-function"
+  # API gateway
+  region               = "us-east-1"
+  account_id           = "579484639223"
 }
