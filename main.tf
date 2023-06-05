@@ -1,4 +1,4 @@
-data "aws_route53_zone" "nissanaop1" {
+data "zone" "nissanaop1" {
   name         = "nissanaop1.com"
   private_zone = true
 }
