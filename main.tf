@@ -1,16 +1,10 @@
 module "lambda" {
   source = "hashicorp/lambda/aws"
 
-  name = "hello_world"
-  runtime = "nodejs14.x"
-  handler = "lambda_function.handler"
-  code_size = 128
-  memory_size = 128
-  timeout = 300
-
-  environment {
-    "FOO" = "bar"
-  }
+  filename      = "lambda_function.zip"
+  function_name = "lambda_function"
+  handler       = "handler.handler"
+  runtime       = "nodejs14.x"
 }
 
 module "api_gateway" {
