@@ -1,4 +1,4 @@
-data "aws_route53_zone" "selected" {
+data "aws_route53_zone" "nissanaop" {
   name         = "nissanaop.com"
   private_zone = true
 }
@@ -37,7 +37,7 @@ module "records" {
       type    = "A"
       alias   = {
         name    = "d-10qxlbvagl.execute-api.us-east-1.amazonaws.com"
-        zone_id = data.aws_route53_zone.selected.zone_id
+        zone_id = data.aws_route53_zone.nissanaop.zone_id
       }
     },
     {
