@@ -1,10 +1,15 @@
+data "aws_route53_zone" "selected" {
+  name         = "nissanaop.com"
+  private_zone = true
+}
+
 module "zones" {
   source  = "terraform-aws-modules/route53/aws//modules/zones"
   version = "~> 2.0"
 
   zones = {
-    "terraform-aws-modules-example.com" = {
-      comment = "terraform-aws-modules-examples.com (testing)"
+    "terraform-aws-modules-nissanaop.com" = {
+      comment = "terraform-aws-modules-nissanaop.com (testing)"
       tags = {
         env = "testing"
       }
@@ -32,7 +37,7 @@ module "records" {
       type    = "A"
       alias   = {
         name    = "d-10qxlbvagl.execute-api.us-east-1.amazonaws.com"
-        zone_id = "module.zones.route53_zone_zone_id"
+        zone_id = data.aws_route53_zone.selected.zone_id
       }
     },
     {
