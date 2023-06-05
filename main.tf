@@ -4,14 +4,14 @@ module "zones" {
 
   zones = {
     "terraform-aws-modules-example.com" = {
-      comment = "terraform-aws-modules-examples.com (production)"
+      comment = "terraform-aws-modules-examples.com (testing)"
       tags = {
         env = "testing"
       }
     }
 
-    "myapp.com" = {
-      comment = "myapp.com"
+    "nissanaop.com" = {
+      comment = "nissanaop.com"
     }
   }
 
@@ -28,7 +28,7 @@ module "records" {
 
   records = [
     {
-      name    = "apigateway1"
+      name    = "nissanaopapigateway"
       type    = "A"
       alias   = {
         name    = "d-10qxlbvagl.execute-api.us-east-1.amazonaws.com"
