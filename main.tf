@@ -5,7 +5,3 @@ module "lambda_function" {
   runtime       = "nodejs14.x"
   source_code   = "./path/to/source_code"
 }
-
-output "lambda_function_arn" {
-  value = module.lambda_function.lambda_function_arn
-}
