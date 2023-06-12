@@ -1,54 +1,41 @@
-data "zone" "nissanaop1" {
-  name         = "nissanaop1.com"
-  private_zone = true
-}
+module "lambda_function" {
+  source = "terraform-aws-modules/lambda/aws"
 
-module "zones" {
-  source  = "terraform-aws-modules/route53/aws//modules/zones"
-  version = "~> 2.0"
+  function_name = "lambda-with-layer"
+  description   = "My awesome lambda function"
+  handler       = "index.lambda_handler"
+  runtime       = "python3.8"
+  publish       = true
 
-  zones = {
-    "terraform-aws-modules-nissanaop1.com" = {
-      comment = "terraform-aws-modules-nissanaop1.com (testing)"
-      tags = {
-        env = "testing"
-      }
-    }
+  source_path = "../src/lambda-function1"
 
-    "nissanaop.com" = {
-      comment = "nissanaop1.com"
-    }
+  store_on_s3 = true
+  s3_bucket   = "my-bucket-id-with-lambda-builds"
+
+  layers = [
+    module.lambda_layer_s3.lambda_layer_arn,
+  ]
+
+  environment_variables = {
+    Serverless = "Terraform"
   }
 
   tags = {
-    ManagedBy = "Terraform"
+    Module = "lambda-with-layer"
   }
 }
 
-module "records" {
-  source  = "terraform-aws-modules/route53/aws//modules/records"
-  version = "~> 2.0"
+module "lambda_layer_s3" {
+  source = "terraform-aws-modules/lambda/aws"
 
-  zone_name = keys(module.zones.route53_zone_zone_id)[0]
+  create_layer = true
 
-  records = [
-    {
-      name    = "nissanaopapigateway"
-      type    = "A"
-      alias   = {
-        name    = "d-10qxlbvagl.execute-api.us-east-1.amazonaws.com"
-        zone_id = data.aws_route53_zone.nissanaop1.zone_id
-      }
-    },
-    {
-      name    = ""
-      type    = "A"
-      ttl     = 300
-      records = [
-        "10.10.10.222",
-      ]
-    },
-  ]
+  layer_name          = "lambda-layer-s3"
+  description         = "My amazing lambda layer (deployed from S3)"
+  compatible_runtimes = ["python3.8"]
 
-  depends_on = [module.zones]
+  source_path = "../src/lambda-layer"
+
+  store_on_s3 = true
+  s3_bucket   = "my-bucket-id-with-lambda-builds"
 }
