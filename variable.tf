@@ -1,6 +1,7 @@
 variable "EnvironmentName" {
   type        = string
   description = "Its a prefix which will be added to resource names."
+  default     =  "dev"
 }
 
 variable "LambdaRuntime" {
@@ -29,11 +30,13 @@ variable "LambdaMemorySize" {
 variable "EnvVariables" {
   type        = string
   description = "Adds environment variables to a function as key-value pairs."
+  default     = "Value1"
 }
 
 variable "SecurityGroup" {
   type        = string
   description = "Group ID of the Security Group to which the EC2 instances needs to be attached."
+  default     = "sg-0bd624d3094269055"  
 }
 
 variable "LogRetentionDays" {
@@ -51,23 +54,25 @@ variable "LambdaErrorThreshold" {
 variable "SNSTopic" {
   type        = string
   description = "Provide the name of SNS Topic to which Cloudwatch alarms needs to be sent."
+  default     = "Nissan-SNS"
 }
 
 variable "EfsMountPath" {
   type        = string
   description = "Provide the path where the function can access the file system, starting with /mnt/."
-  default     = ""
+  default     = "/mnt/"
 }
 
 variable "EfsAccessPointArn" {
   type        = string
   description = "Provide the ARN of the Amazon EFS access point that provides access to the file system."
+  default     = ""
 }
 
 variable "PackageType" {
   type        = string
   description = "Provide the type of package used for Lambda deployment - Zip or Image."
-  default     = "Zip"
+  default     = "Nissan.Zip"
 }
 
 variable "ReservedConcurrency" {
@@ -85,14 +90,17 @@ variable "ProvisionedConcurrency" {
 variable "InsightsExtensionVersion" {
   type        = string
   description = "Provide the version of the extension to be used for Lambda Insights."
+  default     = "arn:aws:lambda:us-east-1:580247275435:layer:LambdaInsightsExtension:38"
 }
 
 variable "LambdaLayer1" {
   type        = string
   description = "Provide the name and version of the Layer that is to be attached to the function."
+  default     = "Nissan.Zip"
 }
 
 variable "LambdaLayer2" {
   type        = string
   description = "Provide the name and version of the Layer that is to be attached to the function."
+  default     = "Nissan.Zip"
 }
