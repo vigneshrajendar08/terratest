@@ -1,24 +1,41 @@
-module "Lambda" {
+module "lambda_function" {
   source = "terraform-aws-modules/lambda/aws"
 
-  environment_name        	= "dev"
-  lambda_runtime          	= "nodejs14.x"
-  lambda_timeout          	= "3"
-  lambda_handler          	= "index.handler"
-  lambda_memory_size      	= "3072"
-  env_variables           	= "Value1"
-  security_group          	= "sg-0bd624d3094269055"
-  log_retention_days      	= "14"
-  LambdaErrorThreshold	  	= "0.25"
-  SNSTopic					        = "chukku"
-  #EfsMountPath			      	= "your_efs_mount_path"
-  #EfsAccessPointArn			  = "your_efs_access_point_arn"
-  PackageType				        = "chukku.zip"
-  #ReservedConcurrency	   	= your_reserved_concurrency
-  #ProvisionedConcurrency  	= your_provisioned_concurrency
-  #InsightsExtensionVersion	= "your_insights_extension_version"
-  LambdaLayer1				      = "chukku.zip"
-  #LambdaLayer2				      = "your_lambda_layer_2"
+  function_name = "chukkulambda"
+  description   = "My awesome lambda function"
+  handler       = "index.lambda_handler"
+  runtime       = "python3.8"
+  publish       = true
 
+  #source_path = "../src/lambda-function1"
 
+  store_on_s3 = true
+  s3_bucket   = "nissanlambdabucket"
+
+  layers = [
+    module.lambda_layer_s3.lambda_layer_arn,
+  ]
+
+  environment_variables = {
+    Serverless = "Terraform"
+  }
+
+  tags = {
+    Module = "lambda-with-layer"
+  }
+}
+
+module "lambda_layer_s3" {
+  source = "terraform-aws-modules/lambda/aws"
+
+  create_layer = true
+
+  layer_name          = "lambda-layer-s3"
+  description         = "My amazing lambda layer (deployed from S3)"
+  compatible_runtimes = ["python3.8"]
+
+  #source_path = "../src/lambda-layer"
+
+  store_on_s3 = true
+  s3_bucket   = "nissanlambdabucket"
 }
