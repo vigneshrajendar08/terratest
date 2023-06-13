@@ -1,23 +1,24 @@
 module "Lambda" {
   source = "terraform-aws-modules/lambda/aws"
 
-  environment_name        	= var.EnvironmentName
-  lambda_runtime          	= var.LambdaRuntime
-  lambda_timeout          	= var.LambdaTimeOut
-  lambda_handler          	= var.LambdaHandler
-  lambda_memory_size      	= var.LambdaMemorySize
-  env_variables           	= var.EnvVariables
-  security_group          	= var.SecurityGroup
-  log_retention_days      	= var.LogRetentionDays
-  LambdaErrorThreshold	  	= var.LambdaErrorThreshold
-  SNSTopic					= var.SNSTopic
-  EfsMountPath				= var.EfsMountPath
-  EfsAccessPointArn			= var.EfsAccessPointArn
-  PackageType				= var.PackageType
-  ReservedConcurrency		= var.ReservedConcurrency
-  ProvisionedConcurrency	= var.ProvisionedConcurrency
-  InsightsExtensionVersion	= var.InsightsExtensionVersion
-  LambdaLayer1				= var.LambdaLayer1
-  LambdaLayer2				= var.LambdaLayer2
-  
+  environment_name        	= "dev"
+  lambda_runtime          	= "nodejs14.x"
+  lambda_timeout          	= "3"
+  lambda_handler          	= "index.handler"
+  lambda_memory_size      	= "3072"
+  env_variables           	= "Value1"
+  security_group          	= "sg-0bd624d3094269055"
+  log_retention_days      	= "14"
+  LambdaErrorThreshold	  	= "0.25"
+  SNSTopic					        = "chukku"
+  #EfsMountPath			      	= "your_efs_mount_path"
+  #EfsAccessPointArn			    = "your_efs_access_point_arn"
+  PackageType				        = ".zip"
+  #ReservedConcurrency	    	= your_reserved_concurrency
+  #ProvisionedConcurrency  	= your_provisioned_concurrency
+  #InsightsExtensionVersion	= "your_insights_extension_version"
+  LambdaLayer1				      = "chukku_lambda_layer_1"
+  #LambdaLayer2				      = "your_lambda_layer_2"
+
+
 }
