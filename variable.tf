@@ -19,6 +19,7 @@ variable "LambdaTimeOut" {
 variable "LambdaHandler" {
   type        = string
   description = "The name of the method within your code that Lambda calls to execute your function."
+  default     = "index.handler"
 }
 
 variable "LambdaMemorySize" {
