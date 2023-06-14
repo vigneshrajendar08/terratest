@@ -1,31 +1,31 @@
 variable "function_name" {
   description = "Name of the Lambda function"
   type        = string
-  value		  = chukulambdafn
+  value		    = chukulambdafn
 }
 
 variable "handler" {
   description = "Name of the handler function"
   type        = string
-  value		  = index.handler
+  value		    = index.handler
 }
 
 variable "runtime" {
   description = "Runtime for the Lambda function"
   type        = string
-  value		  = python3.8
+  value		    = python3.8
 }
 
 variable "timeout" {
   description = "Timeout value for the Lambda function"
   type        = number
-  value		  = 3
+  value		    = 3
 }
 
 variable "memory_size" {
   description = "Memory size for the Lambda function"
   type        = number
-  value		  = 128
+  value		    = 128
 }
 
 variable "env_variables" {
@@ -37,61 +37,61 @@ variable "env_variables" {
 variable "security_group" {
   description = "Security group ID for the Lambda function"
   type        = string
-  value		  = sg-0bd624d3094269055
+  value		    = sg-0bd624d3094269055
 }
 
 variable "log_retention_days" {
   description = "Number of days to retain Lambda function logs"
   type        = number
-  value		  = 14
+  value		    = 14
 }
 
 variable "error_threshold" {
   description = "Error threshold for the Lambda function"
   type        = number
-  value		  = 0.25
+  value		    = 0.25
 }
 
 variable "sns_topic" {
   description = "ARN of the SNS topic for Lambda function errors"
   type        = string
-  value		  = chukusns
+  value		    = chukusns
 }
 
 variable "efs_mount_path" {
   description = "Mount path for the EFS file system"
   type        = string
-  value		  = "/mnt/chukufiles"
+  value		    = "/mnt/chukufiles"
 }
 
 variable "efs_access_point_arn" {
   description = "ARN of the EFS access point"
   type        = string
-  value		  = arn:aws:elasticfilesystem:us-east-1:579484639223:access-point/fsap-001fa5a4a27906b30
+  value		    = arn:aws:elasticfilesystem:us-east-1:579484639223:access-point/fsap-001fa5a4a27906b30
 }
 
 variable "package_type" {
   description = "Package type for the Lambda function"
   type        = string
-  value		  = chuku.zip
+  value		    = chuku.zip
 }
 
 variable "reserved_concurrency" {
   description = "Reserved concurrency for the Lambda function"
   type        = number
-  value		  = 5
+  value		    = 5
 }
 
 variable "provisioned_concurrency" {
   description = "Provisioned concurrency for the Lambda function"
   type        = number
-  value		  = 0
+  value		    = 0
 }
 
 variable "insights_extension_version" {
   description = "Version of the AWS X-Ray Insights extension"
   type        = string
-  value		  = x86-64 platforms
+  version		  = arn:aws:lambda:us-east-1:579484639223:layer:LambdaInsightsExtension:38
 }
 
 variable "lambda_layers" {
@@ -119,7 +119,7 @@ resource "aws_lambda_function" "lambda" {
   }
   package_type                			= var.package_type
   reserved_concurrent_executions 		= var.reserved_concurrency
-  provisioned_concurrent_executions		= var.provisioned_concurrency
+  provisioned_concurrent_executions	= var.provisioned_concurrency
   xray_tracing_enabled        			= true
   xray_log_group_name         			= aws_cloudwatch_log_group.lambda_log_group.name
   layers                      			= var.lambda_layers
