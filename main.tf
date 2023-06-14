@@ -85,13 +85,13 @@ variable "reserved_concurrency" {
 variable "provisioned_concurrency" {
   description = "Provisioned concurrency for the Lambda function"
   type        = number
-  value		    = 0
+  default		    = 0
 }
 
 variable "insights_extension_version" {
   description = "Version of the AWS X-Ray Insights extension"
   type        = string
-  version		  = arn:aws:lambda:us-east-1:579484639223:layer:LambdaInsightsExtension:38
+  default		  = arn:aws:lambda:us-east-1:579484639223:layer:LambdaInsightsExtension:38
 }
 
 variable "lambda_layers" {
