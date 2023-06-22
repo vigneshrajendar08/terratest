@@ -1,37 +1,46 @@
-module "api_gateway" {
-  source = "terraform-aws-modules/apigateway-v2/aws"
 
-  name          = "dev-http"
-  description   = "My awesome HTTP API Gateway"
-  protocol_type = "HTTP"
+module "nlb" {
+  source  = "terraform-aws-modules/alb/aws"
+  version = "~> 8.0"
 
-  cors_configuration = {
-    allow_headers = ["content-type", "x-amz-date", "authorization", "x-api-key", "x-amz-security-token", "x-amz-user-agent"]
-    allow_methods = ["*"]
-    allow_origins = ["*"]
+  name = "chukku-nlb"
+
+  load_balancer_type = "network"
+
+  vpc_id  = "vpc-0f2ab3f641f1f73a0"
+  subnets = ["subnet-07fe1c20051158233", "subnet-0ce8b754739746929"]
+
+  access_logs = {
+    bucket = "chukku-nlb-logs"
   }
 
-  # Custom domain
-  domain_name                 = "terraform-aws-modules.modules.tf"
-  domain_name_certificate_arn = "arn:aws:acm:us-east-1:579484639223:certificate/2b3a7ed9-05e1-4f9e-952b-27744ba06da6"
-
-  # Access logs
-  default_stage_access_log_destination_arn = "arn:aws:logs:us-east-1:579484639223:log-group:debug-apigateway"
-  default_stage_access_log_format          = "$context.identity.sourceIp - - [$context.requestTime] \"$context.httpMethod $context.routeKey $context.protocol\" $context.status $context.responseLength $context.requestId $context.integrationErrorMessage"
-
-  # Routes and integrations
-  integrations = {
-    "POST /" = {
-      lambda_arn             = "arn:aws:lambda:us-east-1:579484639223:function:testforssns"
-      payload_format_version = "2.0"
-      timeout_milliseconds   = 12000
+  target_groups = [
+    {
+      name_prefix      = "pref-"
+      backend_protocol = "TCP"
+      backend_port     = 80
+      target_type      = "ip"
     }
+  ]
 
-    "$default" = {
-      lambda_arn = "arn:aws:lambda:us-east-1:579484639223:function:testforssns"
+  https_listeners = [
+    {
+      port               = 443
+      protocol           = "TLS"
+      certificate_arn    = "arn:aws:iam::579484639223:server-certificate/test_cert-123456789012"
+      target_group_index = 0
     }
-  }
+  ]
+
+  http_tcp_listeners = [
+    {
+      port               = 80
+      protocol           = "TCP"
+      target_group_index = 0
+    }
+  ]
+
   tags = {
-    Name = "http-apigateway"
+    Environment = "Test"
   }
 }
