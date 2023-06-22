@@ -27,12 +27,6 @@ module "api_gateway" {
       timeout_milliseconds   = 12000
     }
 
-    "GET /some-route-with-authorizer" = {
-      integration_type = "HTTP_PROXY"
-      integration_uri  = "some url"
-      authorizer_key   = "azure"
-    }
-
     "$default" = {
       lambda_arn = "arn:aws:lambda:us-east-1:579484639223:function:testforssns"
     }
