@@ -1,54 +1,46 @@
-module "api_gateway" {
-  source = "terraform-aws-modules/apigateway-v2/aws"
 
-  name          = "dev-http"
-  description   = "My awesome HTTP API Gateway"
-  protocol_type = "HTTP"
+module "nlb" {
+  source  = "terraform-aws-modules/alb/aws"
+  version = "~> 8.0"
 
-  cors_configuration = {
-    allow_headers = ["content-type", "x-amz-date", "authorization", "x-api-key", "x-amz-security-token", "x-amz-user-agent"]
-    allow_methods = ["*"]
-    allow_origins = ["*"]
+  name = "my-nlb"
+
+  load_balancer_type = "network"
+
+  vpc_id  = "vpc-0f2ab3f641f1f73a0"
+  subnets = ["subnet-0a5747a7c6ca78afa", "subnet-06be0444002b9d7fd"]
+
+  access_logs = {
+    bucket = "my-nlb-logs"
   }
 
-  # Custom domain
-  domain_name                 = "terraform-aws-modules.modules.tf"
-  domain_name_certificate_arn = "arn:aws:acm-pca:us-east-1:579484639223:certificate-authority/953bf15f-3dd7-472b-a927-e6759f784397"
-
-  # Access logs
-  default_stage_access_log_destination_arn = "arn:aws:logs:us-east-1:579484639223:log-group:/aws/codebuild/testbuild"
-  default_stage_access_log_format          = "$context.identity.sourceIp - - [$context.requestTime] \"$context.httpMethod $context.routeKey $context.protocol\" $context.status $context.responseLength $context.requestId $context.integrationErrorMessage"
-
-  # Routes and integrations
-  integrations = {
-    "POST /" = {
-      lambda_arn             = "arn:aws:lambda:us-east-1:579484639223:function:testforssns"
-      payload_format_version = "2.0"
-      timeout_milliseconds   = 12000
+  target_groups = [
+    {
+      name_prefix      = "pref-"
+      backend_protocol = "TCP"
+      backend_port     = 80
+      target_type      = "ip"
     }
+  ]
 
-    "GET /some-route-with-authorizer" = {
-      integration_type = "HTTP_PROXY"
-      integration_uri  = "some url"
-      authorizer_key   = "azure"
+  https_listeners = [
+    {
+      port               = 443
+      protocol           = "TLS"
+      certificate_arn    = "arn:aws:iam::579484639223:server-certificate/test_cert-123456789012"
+      target_group_index = 0
     }
+  ]
 
-    "$default" = {
-      lambda_arn = "arn:aws:lambda:us-east-1:579484639223:function:testforssns"
+  http_tcp_listeners = [
+    {
+      port               = 80
+      protocol           = "TCP"
+      target_group_index = 0
     }
-  }
-
-  authorizers = {
-    "azure" = {
-      authorizer_type  = "JWT"
-      identity_sources = "$request.header.Authorization"
-      name             = "azure-auth"
-      audience         = ["d6a38afd-45d6-4874-d1aa-3c5c558aqcc2"]
-      issuer           = "https://sts.windows.net/aaee026e-8f37-410e-8869-72d9154873e4/"
-    }
-  }
+  ]
 
   tags = {
-    Name = "http-apigateway"
+    Environment = "Test"
   }
 }
