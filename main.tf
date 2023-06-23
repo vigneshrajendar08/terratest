@@ -13,10 +13,10 @@ module "api_gateway" {
 
   # Custom domain
   domain_name                 = "terraform-aws-modules.nissan.com"
-  domain_name_certificate_arn = "arn:aws:acm:us-east-1:579484639223:certificate/2b3a7ed9-05e1-4f9e-952b-27744ba06da6"
+  domain_name_certificate_arn = "arn:aws:acm-pca:us-east-1:579484639223:certificate-authority/953bf15f-3dd7-472b-a927-e6759f784397"
 
   # Access logs
-  default_stage_access_log_destination_arn = "arn:aws:logs:us-east-1:579484639223:log-group:debug-apigateway"
+  default_stage_access_log_destination_arn = "arn:aws:logs:us-east-1:579484639223:log-group:/aws/lambda/lambdafunction:*"
   default_stage_access_log_format          = "$context.identity.sourceIp - - [$context.requestTime] \"$context.httpMethod $context.routeKey $context.protocol\" $context.status $context.responseLength $context.requestId $context.integrationErrorMessage"
 
 
