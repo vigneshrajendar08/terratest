@@ -11,7 +11,7 @@ module "nlb" {
   subnets = ["subnet-0a5747a7c6ca78afa", "subnet-06be0444002b9d7fd"]
 
   access_logs = {
-    bucket = "my-nlb-logs"
+    bucket = "my-nlb-logs1"
   }
 
   target_groups = [
