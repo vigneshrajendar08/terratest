@@ -1,46 +1,13 @@
-
-module "nlb" {
-  source  = "terraform-aws-modules/alb/aws"
-  version = "~> 8.0"
-
-  name = "my-nlb"
-
-  load_balancer_type = "network"
-
-  vpc_id  = "vpc-0f2ab3f641f1f73a0"
-  subnets = ["subnet-0a5747a7c6ca78afa", "subnet-06be0444002b9d7fd"]
-
-  access_logs = {
-    bucket = "my-nlb-logs1"
-  }
-
-  target_groups = [
-    {
-      name_prefix      = "pref-"
-      backend_protocol = "TCP"
-      backend_port     = 80
-      target_type      = "ip"
-    }
-  ]
-
-  https_listeners = [
-    {
-      port               = 443
-      protocol           = "TLS"
-      certificate_arn    = "arn:aws:iam::579484639223:server-certificate/test_cert-123456789012"
-      target_group_index = 0
-    }
-  ]
-
-  http_tcp_listeners = [
-    {
-      port               = 80
-      protocol           = "TCP"
-      target_group_index = 0
-    }
-  ]
-
-  tags = {
-    Environment = "Test"
-  }
+data archive_file lambda {
+  type        = "zip"
+  source_file = "index.js"
+  output_path = "NissanAOP_lambdafunction.zip"
+}
+module "lambda" {
+  source  = "cloudposse/lambda-function/aws"
+  version = "0.5.1"
+  filename      = "NissanAOP_lambdafunction.zip"
+  function_name = "NissanAOP_lambdafunction"
+  handler       = "handler.handler"
+  runtime       = "nodejs14.x"
 }
