@@ -9,10 +9,6 @@ module "nlb" {
   vpc_id  = "vpc-0f2ab3f641f1f73a0"
   subnets = ["subnet-092f810cc59683e1e", "subnet-0a5747a7c6ca78afa"]
 
-  access_logs = {
-    bucket = "my-nlb-logs"
-  }
-
   target_groups = [
     {
       name_prefix      = "pref-"
