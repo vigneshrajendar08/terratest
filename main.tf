@@ -1,50 +1,14 @@
 module "api_gateway" {
   source = "terraform-aws-modules/apigateway-v2/aws"
 
-  name          = "chukkuapi-http"
-  description   = "chukku HTTP API Gateway"
-  protocol_type = "HTTP"
+  create = true # to disable all resources
 
-  cors_configuration = {
-    allow_headers = ["content-type", "x-amz-date", "authorization", "x-api-key", "x-amz-security-token", "x-amz-user-agent"]
-    allow_methods = ["*"]
-    allow_origins = ["*"]
-  }
+  create_api_gateway               = true  # to control creation of API Gateway
+  create_api_domain_name           = true  # to control creation of API Gateway Domain Name
+  create_default_stage             = true  # to control creation of "$default" stage
+  create_default_stage_api_mapping = true  # to control creation of "$default" stage and API mapping
+  create_routes_and_integrations   = true  # to control creation of routes and integrations
+  create_vpc_link                  = true  # to control creation of VPC link
 
-  # Custom domain
-  domain_name                 = "terraform-aws-modules.modules.tf"
-  domain_name_certificate_arn = "arn:aws:acm:us-east-1:579484639223:certificate/ac534e5d-7d37-4b49-b244-18c3c4359043"
-
-  # Routes and integrations
-  integrations = {
-    "POST /" = {
-      lambda_arn             = "arn:aws:lambda:us-east-1:579484639223:function:testforssns"
-      payload_format_version = "2.0"
-      timeout_milliseconds   = 12000
-    }
-
-    "GET /some-route-with-authorizer" = {
-      integration_type = "HTTP_PROXY"
-      integration_uri  = "http://reqres.in/img/faces/7-image.jpg"
-      authorizer_key   = "azure"
-    }
-
-    "$default" = {
-      lambda_arn = "arn:aws:lambda:us-east-1:579484639223:function:testforssns"
-    }
-  }
-
-  authorizers = {
-    "azure" = {
-      authorizer_type  = "JWT"
-      identity_sources = "$request.header.Authorization"
-      name             = "azure-auth"
-      audience         = ["d6a38afd-45d6-4874-d1aa-3c5c558aqcc2"]
-      issuer           = "https://sts.windows.net/aaee026e-8f37-410e-8869-72d9154873e4/"
-    }
-  }
-
-  tags = {
-    Name = "http-apigateway"
-  }
+  # ... omitted
 }
