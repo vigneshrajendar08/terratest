@@ -1,52 +1,49 @@
 module "nlb" {
-  source  = "terraform-aws-modules/alb/aws"
-  version = "6.0.0"
-  name_prefix = "chukku-visunlb-"
-  #name = "nlb-basic"
-  load_balancer_type = "network"
-  vpc_id = module.vpc.vpc_id
-  subnets = module.vpc.public_subnets
-  #security_groups = [module.loadbalancer_sg.this_security_group_id] # Security Groups not supported for NLB
-  # TCP Listener 
-    http_tcp_listeners = [
-    {
-      port               = 80
-      protocol           = "TCP"
-      target_group_index = 0
-    }  
-  ]  
+  source  = "terraform-aws-modules/nlb/aws"
+  version = "2.6.0"
 
-  #  TLS Listener
+  name_prefix         = "chukku-visunlb-"
+  load_balancer_type  = "network"
+  vpc_id              = module.vpc.vpc_id
+  subnets             = module.vpc.public_subnets
+
+  tcp_listeners = [
+    {
+      port     = 80
+      protocol = "TCP"
+    }
+  ]
+
   https_listeners = [
     {
-      port               = 443
-      protocol           = "TLS"
-      certificate_arn    = module.acm.acm_certificate_arn
-      target_group_index = 0
-    },
+      port                  = 443
+      protocol              = "TLS"
+      certificate_arn       = module.acm.acm_certificate_arn
+      target_group_index    = 0
+      ssl_policy            = "ELBSecurityPolicy-2016-08"
+      force_destroy         = true
+      target_group_timeout  = 10
+      idle_timeout          = 60
+    }
   ]
 
-
-  # Target Group
   target_groups = [
     {
-      name_prefix      = "aop-dev-nlb"
-      backend_protocol = "TCP"
-      backend_port     = 80
-      target_type      = "instance"
-      deregistration_delay = 10
-      health_check = {
-        enabled             = true
-        interval            = 30
-        path                = "/aop-dev-nlb/index.html"
-        port                = "traffic-port"
-        healthy_threshold   = 3
-        unhealthy_threshold = 3
-        timeout             = 6
-      }      
-    },
+      name_prefix            = "aop-dev-nlb"
+      backend_protocol       = "TCP"
+      backend_port           = 80
+      target_type            = "instance"
+      health_check_port      = 80
+      health_check_protocol  = "TCP"
+      health_check_path      = "/aop-dev-nlb/index.html"
+      health_check_interval  = 30
+      health_check_timeout   = 6
+      health_check_threshold = 3
+      health_check_healthy_threshold = 3
+    }
   ]
+
   tags = {
     Environment = "aop-dev"
+  }
 }
-)
