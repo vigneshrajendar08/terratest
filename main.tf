@@ -6,7 +6,7 @@ module "apigateway-v2" {
   description = "My HTTP API Gateway"
 
   domain_name = var.domain_name
-  certificate_arn = var.domain_name_certificate_arn
+  domain_name_certificate_arn = var.domain_name_certificate_arn
 
   protocol_type = "HTTP"
 
