@@ -7,11 +7,6 @@ module "apigateway-v2" {
 
   protocol_type = "HTTP"
 
-  cors_enabled          = true
-  cors_allow_origin     = "*"
-  cors_allow_methods    = ["GET", "POST", "PUT", "DELETE"]
-  cors_allow_headers    = ["*"]
-
   tags = {
     Environment = "Production"
   }
