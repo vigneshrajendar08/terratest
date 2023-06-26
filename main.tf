@@ -22,7 +22,7 @@ module "nlb" {
     {
       port               = 443
       protocol           = "TLS"
-      certificate_arn    = "arn:aws:acm-pca:us-east-1:579484639223:certificate-authority/953bf15f-3dd7-472b-a927-e6759f784397"
+      certificate_arn    = "arn:aws:acm:us-east-1:579484639223:certificate/ac534e5d-7d37-4b49-b244-18c3c4359043"
       target_group_index = 0
     }
   ]
