@@ -1,37 +1,45 @@
-module "nlb_with_apigateway" {
-  source  = "terraform-aws-modules/nlb/aws"
-  version = "2.6.0"
+module "nlb" {
+  source  = "terraform-aws-modules/alb/aws"
+  version = "~> 8.0"
 
-  name_prefix        = "aopdev-nlb-apigateway-"
+  name = "my-nlb"
+
   load_balancer_type = "network"
-  vpc_id             = module.vpc.vpc_id
-  subnets            = module.vpc.public_subnets
 
-  tcp_listeners = [
-    {
-      port     = 80
-      protocol = "TCP"
-    }
-  ]
+  vpc_id  = "vpc-0f2ab3f641f1f73a0"
+  subnets = ["subnet-092f810cc59683e1e", "subnet-0a5747a7c6ca78afa"]
+
+  access_logs = {
+    bucket = "my-nlb-logs"
+  }
 
   target_groups = [
     {
-      name_prefix       = "apigateway-nlb"
-      backend_protocol  = "TCP"
-      backend_port      = 80
-      target_type       = "ip"
-      target_ips        = module.apigateway.execution_arns
-      health_check_port = 80
-      health_check_protocol = "TCP"
-      health_check_interval = 30
-      health_check_timeout  = 10
-      health_check_threshold = 3
-      health_check_healthy_threshold = 3
+      name_prefix      = "pref-"
+      backend_protocol = "TCP"
+      backend_port     = 80
+      target_type      = "ip"
+    }
+  ]
+
+  https_listeners = [
+    {
+      port               = 443
+      protocol           = "TLS"
+      certificate_arn    = "arn:aws:acm-pca:us-east-1:579484639223:certificate-authority/953bf15f-3dd7-472b-a927-e6759f784397"
+      target_group_index = 0
+    }
+  ]
+
+  http_tcp_listeners = [
+    {
+      port               = 80
+      protocol           = "TCP"
+      target_group_index = 0
     }
   ]
 
   tags = {
-    Environment = "aop-dev"
-    Project     = "aopdev-project"
+    Environment = "Test"
   }
 }
