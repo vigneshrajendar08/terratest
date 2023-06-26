@@ -1,7 +1,7 @@
 variable "domain_name" {
   description = "The custom domain name for the API Gateway"
   type        = string
-  default     = "google.com"
+  default     = "chukkuda.xyz"
 }
 
 variable "domain_name_certificate_arn" {
