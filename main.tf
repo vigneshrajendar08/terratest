@@ -1,4 +1,3 @@
-# Terraform AWS Network Load Balancer (NLB)
 module "nlb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "6.0.0"
@@ -50,4 +49,4 @@ module "nlb" {
   tags = {
     Environment = "aop-dev"
 }
-
+)
