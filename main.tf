@@ -5,9 +5,12 @@ module "apigateway-v2" {
   name        = "my-http-api-gateway"
   description = "My HTTP API Gateway"
 
+  domain_name = var.domain_name
+  certificate_arn = var.domain_name_certificate_arn
+
   protocol_type = "HTTP"
 
   tags = {
-    Environment = "Production"
+    Environment = "aop-dev"
   }
 }
