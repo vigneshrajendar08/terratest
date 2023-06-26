@@ -1,5 +1,5 @@
 module "api_gateway" {
-  source = "terraform-aws-modules/apigateway/aws"
+  source = "terraform-aws-modules/apigateway-v2/aws"
   version = "~> 3.0"
 
   name        = "my-http-api-gateway"
