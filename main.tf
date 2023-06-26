@@ -1,41 +1,50 @@
-module "nlb" {
-  source  = "terraform-aws-modules/alb/aws"
-  version = "~> 8.0"
+module "api_gateway" {
+  source = "terraform-aws-modules/apigateway-v2/aws"
 
-  name = "my-nlb"
+  name          = "dev-http"
+  description   = "My awesome HTTP API Gateway"
+  protocol_type = "HTTP"
 
-  load_balancer_type = "network"
+  cors_configuration = {
+    allow_headers = ["content-type", "x-amz-date", "authorization", "x-api-key", "x-amz-security-token", "x-amz-user-agent"]
+    allow_methods = ["*"]
+    allow_origins = ["*"]
+  }
 
-  vpc_id  = "vpc-0f2ab3f641f1f73a0"
-  subnets = ["subnet-092f810cc59683e1e", "subnet-0a5747a7c6ca78afa"]
+  # Custom domain
+  domain_name                 = "terraform-aws-modules.modules.tf"
+  domain_name_certificate_arn = "arn:aws:acm:us-east-1:579484639223:certificate/ac534e5d-7d37-4b49-b244-18c3c4359043"
 
-  target_groups = [
-    {
-      name_prefix      = "pref-"
-      backend_protocol = "TCP"
-      backend_port     = 80
-      target_type      = "ip"
+  # Routes and integrations
+  integrations = {
+    "POST /" = {
+      lambda_arn             = "arn:aws:lambda:eu-west-1:052235179155:function:my-function"
+      payload_format_version = "2.0"
+      timeout_milliseconds   = 12000
     }
-  ]
 
-  https_listeners = [
-    {
-      port               = 443
-      protocol           = "TLS"
-      certificate_arn    = "arn:aws:acm:us-east-1:579484639223:certificate/ac534e5d-7d37-4b49-b244-18c3c4359043"
-      target_group_index = 0
+    "GET /some-route-with-authorizer" = {
+      integration_type = "HTTP_PROXY"
+      integration_uri  = "some url"
+      authorizer_key   = "aws"
     }
-  ]
 
-  http_tcp_listeners = [
-    {
-      port               = 80
-      protocol           = "TCP"
-      target_group_index = 0
+    "$default" = {
+      lambda_arn = "arn:aws:lambda:us-east-1:579484639223:function:testforssns"
     }
-  ]
+  }
+
+  authorizers = {
+    "aws" = {
+      authorizer_type  = "JWT"
+      identity_sources = "$request.header.Authorization"
+      name             = "aws-auth"
+      audience         = ["d6a38afd-45d6-4874-d1aa-3c5c558aqcc2"]
+      issuer           = "https://sts.windows.net/aaee026e-8f37-410e-8869-72d9154873e4/"
+    }
+  }
 
   tags = {
-    Environment = "Test"
+    Name = "http-apigateway"
   }
 }
