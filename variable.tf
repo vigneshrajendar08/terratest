@@ -1,7 +1,7 @@
 # Input variables for the lambda module
 variable "lambda_source_file" {
   description = "Path to the Lambda source code file."
-  default     = "./index.js" # Update the path accordingly
+  default     = "index.js" # Update the path accordingly
 }
 
 variable "lambda_output_path" {
