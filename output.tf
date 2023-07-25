@@ -12,7 +12,7 @@ output "lambda_function_arn" {
 
 output "lambda_function_runtime" {
   description = "The runtime of the Lambda function."
-  value       = module.lambda_runtime
+  value       = module.lambda_function_runtime
 }
 
 output "lambda_function_handler" {
