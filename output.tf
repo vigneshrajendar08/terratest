@@ -17,5 +17,5 @@ output "lambda_function_runtime" {
 
 output "lambda_function_handler" {
   description = "The handler function of the Lambda function."
-  value       = module.lambda_handler
+  value       = module.lambda_function_handler
 }
