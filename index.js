@@ -1,4 +1,6 @@
 exports.handler = (event, context, callback) => {
-    console.log('Hello, lambda!');
-    callback(null, 'success');
+    return {
+        'status': "200",
+        'message': "First Lambda App!!"
+    };
 }
