@@ -10,12 +10,12 @@ output "lambda_function_arn" {
   value       = module.lambda_function_arn
 }
 
-output "lambda_function_runtime" {
+output "lambda_runtime" {
   description = "The runtime of the Lambda function."
-  value       = module.lambda_function_runtime
+  value       = module.lambda_runtime
 }
 
-output "lambda_function_handler" {
+output "lambda_handler" {
   description = "The handler function of the Lambda function."
-  value       = module.lambda_function_handler
+  value       = module.lambda_handler
 }
