@@ -1,6 +1,6 @@
 output "api_gateway_id" {
   description = "The ID of the API Gateway"
-  value       = module.api_gateway.id
+  value       = module.api_gateway.apigatewayv2_api_api_endpoint
 }
 
 output "api_gateway_name" {
